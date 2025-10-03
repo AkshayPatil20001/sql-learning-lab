@@ -274,9 +274,17 @@ department_name='Sales'));
 select * from employees where salary > 14000; 
 
 -- 30. Write a query that returns the names of all employees who have a manager with a salary greater than $100,000.
-select concat(e.first_name, ' ', e.last_name)as full_name, e.salary from employees e
-join departments d on e.employee_id=d.department_id where 
-salary > (select salary from employees where salary > 100000); 
+select concat(e.first_name, ' ', e.last_name) as full_name, e.salary
+from employees e
+join employees m on e.manager_id = m.employee_id
+where m.salary > 10000;
+
+select concat(first_name, ' ', last_name) as full_name, salary
+from employees  where manager_id in (
+  select employee_id
+  from employees
+  where salary > 10000
+);
 
 -- Just to verify if anyone has salary greater than 1 lakh.
 select salary from employees where salary > 100000;
