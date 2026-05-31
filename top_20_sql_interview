@@ -1,0 +1,70 @@
+-- Schema Structure --  
+
+-- Create Employee table
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50),
+    Department VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+-- Insert 20 sample employee records
+INSERT INTO Employee (EmpID, EmpName, Department, Salary) VALUES
+(1, 'Amit Sharma', 'HR', 45000.00),
+(2, 'Priya Mehta', 'Finance', 60000.00),
+(3, 'Ravi Kumar', 'IT', 75000.00),
+(4, 'Sneha Patel', 'Marketing', 52000.00),
+(5, 'Arjun Singh', 'Sales', 48000.00),
+(6, 'Neha Verma', 'Finance', 67000.00),
+(7, 'Karan Joshi', 'IT', 82000.00),
+(8, 'Meera Nair', 'HR', 46000.00),
+(9, 'Vikram Rao', 'Sales', 50000.00),
+(10, 'Anita Desai', 'Marketing', 54000.00),
+(11, 'Suresh Iyer', 'Finance', 61000.00),
+(12, 'Pooja Gupta', 'IT', 78000.00),
+(13, 'Rahul Malhotra', 'HR', 47000.00),
+(14, 'Divya Kapoor', 'Sales', 49000.00),
+(15, 'Manish Jain', 'Marketing', 53000.00),
+(16, 'Shweta Reddy', 'Finance', 65000.00),
+(17, 'Nikhil Bhat', 'IT', 80000.00),
+(18, 'Ruchi Saxena', 'HR', 45500.00),
+(19, 'Deepak Yadav', 'Sales', 51000.00),
+(20, 'Komal Chawla', 'Marketing', 56000.00);
+
+
+-- 1. Second Highest salary
+
+ # Approach 1: Using Limit with Offset
+SELECT EmpName, Salary 
+FROM Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1;
+
+# Approach 2: Using Dense Rank Windows Functioin
+SELECT EmpName, Salary
+FROM (
+    SELECT EmpName, Salary,
+           DENSE_RANK() OVER (ORDER BY Salary DESC) AS mk
+    FROM Employee
+) AS bc
+WHERE mk = 2;
+
+
+-- 3. Department wise highest Salary
+
+ # Approach 1: Using Windows Function
+ SELECT *
+FROM (
+    SELECT Department, EmpName, Salary,
+           DENSE_RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS rnk
+    FROM Employee
+) AS bc
+WHERE rnk = 1;
+
+ # Approach 2: Using group by
+SELECT Department, MAX(Salary) AS HighestSalary
+FROM Employee
+GROUP BY Department;
+
+
+
