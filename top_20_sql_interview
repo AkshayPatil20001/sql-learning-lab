@@ -122,6 +122,35 @@ FROM EMP
 WHERE EmpName NOT LIKE '%M%';
 
 
+-- 6.Pattern Questions
+-- # 1. Display the names of all employees whose name contains exactly four letters
+SELECT EmpName
+FROM Employee
+WHERE EmpName LIKE '____';
+
+-- # 2. Display the names of employees whose name contains 'L' as the second letter and 'M' as the fourth letter
+SELECT EmpName
+FROM Employee
+WHERE EmpName LIKE '_L_M%';
+
+-- # 3. Display the employee names and hire dates for the employees who joined in the month of December
+SELECT EmpName, HireDate
+FROM Employee
+WHERE MONTH(HireDate) = 12;
+
+-- # 4. Display the names of employees whose name contains exactly two 'L's
+SELECT EmpName
+FROM Employee
+WHERE EmpName LIKE '%L%L%'
+  AND EmpName NOT LIKE '%L%L%L%';
+
+-- # 5. Display the names of employees whose name starts with 'J' and ends with 'S'
+SELECT EmpName
+FROM Employee
+WHERE EmpName LIKE 'J%S';
+
+
+
 
 
 
