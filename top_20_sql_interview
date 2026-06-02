@@ -83,4 +83,24 @@ FROM Employee
 WHERE MOD(EmpID, 2) = 1;
 
 
+-- 4. Display Duplicates of a columns
+-- #Approach1: 
+SELECT EmpName, COUNT(*)
+FROM Employee
+GROUP BY EmpName
+HAVING COUNT(*) > 1;
+
+-- #Approach2:
+SELECT *
+FROM Employee
+WHERE EmpName IN (
+    SELECT EmpName
+    FROM Employee
+    GROUP BY EmpName
+    HAVING COUNT(*) > 1
+);
+
+
+
+
 
