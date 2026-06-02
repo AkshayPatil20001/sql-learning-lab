@@ -184,6 +184,40 @@ FROM (
 GROUP BY ProductID;
 
 
+-- 9. Display first and last row 
+
+-- #Approach 1:
+WITH first_last AS (
+    SELECT 
+        empid,
+        empname,
+        ROW_NUMBER() OVER(ORDER BY empid ASC) AS asct 
+    FROM employee
+)
+SELECT * 
+FROM first_last 
+WHERE asct = 1 OR asct = 15;
+
+
+-- # Approach 2:
+-- First and last row in one query
+(
+    SELECT *
+    FROM Employee
+    ORDER BY EmpID ASC
+    LIMIT 1
+)
+UNION
+(
+    SELECT *
+    FROM Employee
+    ORDER BY EmpID DESC
+    LIMIT 1
+);
+
+
+
+
 
 
 
