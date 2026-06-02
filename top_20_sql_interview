@@ -100,6 +100,28 @@ WHERE EmpName IN (
     HAVING COUNT(*) > 1
 );
 
+-- 5.Pattern Matching
+-- # 1. Select all employee names from the EMP table that start with the letter 'M'
+SELECT EmpName
+FROM EMP
+WHERE EmpName LIKE 'M%';
+
+-- # 2. Display employee names that end with the letter 'n'
+SELECT EmpName
+FROM EMP
+WHERE EmpName LIKE '%n';
+
+-- # 3. Find all employees who have the letter 'M' anywhere in their name
+SELECT EmpName
+FROM EMP
+WHERE EmpName LIKE '%M%';
+
+-- # 4. List all employee names that do not contain the letter 'M'
+SELECT EmpName
+FROM EMP
+WHERE EmpName NOT LIKE '%M%';
+
+
 
 
 
