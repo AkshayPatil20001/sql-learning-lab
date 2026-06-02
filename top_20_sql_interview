@@ -150,6 +150,42 @@ FROM Employee
 WHERE EmpName LIKE 'J%S';
 
 
+-- 7. Displaying the nth row in place of n add any row number which you want to display
+
+WITH RankedEmployees AS (
+    SELECT empid, empname, 
+           ROW_NUMBER() OVER (ORDER BY empid) AS row_num 
+    FROM employee
+)
+SELECT empid, empname, row_num
+FROM RankedEmployees
+WHERE row_num = 4;
+
+
+-- 8. Union and Union ALL
+-- # 1. Combine employee names from Employee and Manager tables,
+--    remove duplicates, and indicate source
+SELECT EmpName, 'Employee' AS Source
+FROM Employee
+UNION
+SELECT ManagerName, 'Manager' AS Source
+FROM Manager;
+
+-- # 2. Merge sales records from OnlineSales and StoreSales tables
+--    using UNION ALL, then calculate total revenue grouped by ProductID
+SELECT ProductID, SUM(Revenue) AS TotalRevenue
+FROM (
+    SELECT ProductID, Revenue
+    FROM OnlineSales
+    UNION ALL
+    SELECT ProductID, Revenue
+    FROM StoreSales
+) AS CombinedSales
+GROUP BY ProductID;
+
+
+
+
 
 
 
